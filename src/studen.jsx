@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ReactDOM } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Student (){
@@ -12,6 +13,17 @@ function Student (){
         setstudent(result.data);
     }
 
+    var goto = useNavigate()
+
+    const DeleteData =async (id) =>{
+        await axios.delete(`http://localhost:3000/student/${id}`).then((resp)=>{
+            alert("delete successfull");
+            goto("/student")
+        }).catch((err)=>{
+            alert("data id not deleted");
+        });   
+    }
+    
     return(
         <>
        <table className="table table-bordered table-hover">
@@ -31,8 +43,8 @@ function Student (){
                 <td>{val.name}</td>
                 <td>{val.number}</td>
                 <td>{val.address}</td>
-                <td><button className="btn btn-outline-danger">delet</button>&nbsp;&nbsp;&nbsp;&nbsp;
-                <button className="btn btn-outline-success">update</button></td>   
+                <td><button className="btn btn-outline-danger"><Link to={`/delete`} onClick={()=>DeleteData(val.id)}>delet</Link></button>&nbsp;&nbsp;&nbsp;&nbsp;
+                <button className="btn btn-outline-success"><Link to={`/update/${val.id}`}>update</Link></button></td>   
             </tr>
             )
         })}

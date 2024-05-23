@@ -1,7 +1,7 @@
 import React from "react";
 import { ReactDOM } from "react";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 class Home extends React.Component{
     constructor(){
         super();
@@ -11,6 +11,7 @@ class Home extends React.Component{
             address:''
         }
     }
+    
     changeName = (event) =>{
         this.setState({
             name:event.target.value,
@@ -36,6 +37,7 @@ class Home extends React.Component{
             number:'',
             address:''
         })
+        goto('/student')
     }
     render(){
     return (
